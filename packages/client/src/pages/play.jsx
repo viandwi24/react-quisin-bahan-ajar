@@ -27,7 +27,6 @@ export function Question({ question, onAnswer }) {
     }
   }, [countdown])
 
-
   // lifecycles
   // on mounted
   useEffect(() => {
@@ -75,7 +74,8 @@ export function PlayPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const currentQuestion = useMemo(() => {
     return quiz.question?.[currentQuestionIndex] || null
-  })
+  }, [answers, currentQuestionIndex])
+
 
   const reports = useMemo(() => {
     return answers.map((answer, index) => {
@@ -87,7 +87,7 @@ export function PlayPage() {
         isCorrect: isCorrect,
       }
     })
-  }, [answers, quiz])
+  }, [answers])
 
   const score = useMemo(() => {
     const total_question = reports.length
@@ -107,7 +107,7 @@ export function PlayPage() {
   }
   const prepare = async () => {
     await fetchDataQuiz()
-    setQuizState('quiz')
+    setQuizState('idle')
   }
   const startQuiz = async () => {
     setQuizState('quiz')
